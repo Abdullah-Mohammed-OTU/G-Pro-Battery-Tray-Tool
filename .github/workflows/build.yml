@@ -28,7 +28,7 @@ jobs:
 
       - name: Build exe
         run: >
-          pyinstaller --onefile --noconsole
+          pyinstaller --onedir --noconsole
           --name SuperlightBattery
           --hidden-import pystray._win32
           superlight_battery.py
@@ -36,14 +36,18 @@ jobs:
       - name: Smoke test (imports load)
         run: python -c "import hid, pystray, PIL; import superlight_battery"
 
+      - name: Zip build
+        run: Compress-Archive -Path dist/SuperlightBattery -DestinationPath SuperlightBattery.zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: SuperlightBattery
-          path: dist/SuperlightBattery.exe
+          path: dist/SuperlightBattery/
+          if-no-files-found: error
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/SuperlightBattery.exe
+          files: SuperlightBattery.zip
           generate_release_notes: true
