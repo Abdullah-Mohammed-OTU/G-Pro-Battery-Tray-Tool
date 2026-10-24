@@ -43,8 +43,6 @@ Device index `0x01` is tried first (paired through the receiver), then `0xFF` (w
 
 ## Building the exe
 
-The exe is built automatically by GitHub Actions on a Windows runner (`.github/workflows/build.yml`). Pushing a tag like `v1.0.0` builds it and attaches it to a GitHub Release.
-
 To build locally on Windows:
 
 ```
